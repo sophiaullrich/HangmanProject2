@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HangmanGame" default="test" basedir=".">
+    <description>Builds, tests, and runs the project HangmanGame.</description>
+    <import file="nbproject/build-impl.xml"/>
+    
+    <!-- Define a classpath for JUnit -->
+    <path id="junit.classpath">
+        <pathelement location="lib/junit-jupiter-api.jar"/>
+        <pathelement location="lib/junit-jupiter-engine.jar"/>
+        <pathelement location="lib/junit-platform-console-standalone.jar"/>
+        <pathelement location="lib/junit-jupiter-params.jar"/>
+        <pathelement path="${build.classes.dir}"/>
+    </path>
+
+    <!-- Custom target to run JUnit tests with the defined classpath -->
+    <target name="test" depends="compile">
+        <junit printsummary="true" haltonfailure="true">
+            <classpath>
+                <path refid="junit.classpath"/>
+            </classpath>
+            <batchtest>
+                <fileset dir="${build.test.classes.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+            <formatter type="plain"/>
+        </junit>
+    </target>
+
+    <!-- Custom target to compile tests -->
+    <target name="compile-tests" depends="compile">
+        <javac srcdir="${test.src.dir}" destdir="${build.test.classes.dir}" includeantruntime="false" classpathref="junit.classpath"/>
+    </target>
+
+    <!-- Custom target to clean the test classes directory -->
+    <target name="clean-tests" depends="clean">
+        <delete dir="${build.test.classes.dir}"/>
+    </target>
+
+    <!--
+
+    There exist several targets which are by default empty and which can be 
+    used for execution of your tasks. These targets are usually executed 
+    before and after some main targets. They are: 
+
+      -pre-init:                 called before initialization of project properties
+      -post-init:                called after initialization of project properties
+      -pre-compile:              called before javac compilation
+      -post-compile:             called after javac compilation
+      -pre-compile-single:       called before javac compilation of single file
+      -post-compile-single:      called after javac compilation of single file
+      -pre-compile-test:         called before javac compilation of JUnit tests
+      -post-compile-test:        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUnit test
+      -pre-jar:                  called before JAR building
+      -post-jar:                 called after JAR building
+      -post-clean:               called after cleaning build products
+
+    (Targets beginning with '-' are not intended to be called on their own.)
+
+    Example of inserting an obfuscator after compilation could look like this:
+
+        <target name="-post-compile">
+            <obfuscate>
+                <fileset dir="${build.classes.dir}"/>
+            </obfuscate>
+        </target>
+
+    For list of available properties check the imported 
+    nbproject/build-impl.xml file. 
+
+    -->
+</project>
